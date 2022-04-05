@@ -21,5 +21,21 @@ public:
 	~StencilTestBuffer();
 
 	bool Test(int x, int y, const unsigned char& t) override;
+
+	//	wirte enable
+	bool& IsWriteEnable();
+
+	void SetTestFunc(const TestFunc& f);
+
+	void SetStencilOPFunc(const StencilOPFunc& f);
+
+	void SetStencilMaskValue(const unsigned char& v);
+	
+private:
+	// mask
+	unsigned char mMaskValue;
+	StencilOPFunc mOPFunc;
+	TestFunc meBufferTestFunc;
+	bool mbWrite;
 };
 

@@ -1,6 +1,6 @@
-#include "ColorBuffer.h"
+#include "mathUtils/colour.h"
 
-Colour::Colour(const unsigned char& r, const unsigned char& g, const unsigned char& b, const unsigned char& a/* = 255*/)
+Colour::Colour(const float& r, const float& g, const float& b, const float& a/* = 1.0f*/)
 	: red(r)
 	, green(g)
 	, blue(b)
@@ -9,10 +9,19 @@ Colour::Colour(const unsigned char& r, const unsigned char& g, const unsigned ch
 }
 
 Colour::Colour()
-	: red(255)
-	, green(255)
-	, blue(255)
-	, alpha(255)
+	: red(0.0f)
+	, green(0.0f)
+	, blue(0.0f)
+	, alpha(0.0f)
+{
+
+}
+
+Colour::Colour(const float& v)
+	: red(v)
+	, green(v)
+	, blue(v)
+	, alpha(v)
 {
 
 }
@@ -20,6 +29,15 @@ Colour::Colour()
 Colour::~Colour()
 {
 
+}
+
+Colour Colour::operator*(const Colour& other)
+{
+	red *= other.red;
+	green *= other.green;
+	blue *= other.blue;
+	alpha *= other.alpha;
+	return *this;
 }
 
 Colour Colour::operator-=(const Colour& other)
@@ -59,20 +77,3 @@ bool Colour::operator==(const Colour& other)
 {
 	return red == other.red && green == other.green && blue == other.blue && alpha == other.alpha;
 }
-
-
-ColorBuffer::ColorBuffer()
-{
-
-}
-
-ColorBuffer::~ColorBuffer()
-{
-
-}
-
-bool ColorBuffer::Test(int x, int y, const Colour& t)
-{
-	return true;
-}
-

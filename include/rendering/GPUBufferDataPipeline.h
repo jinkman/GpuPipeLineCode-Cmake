@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
 
-#include "ColorBuffer.h"
-#include "DepthTestBuffer.h"
-#include "StencilTestBuffer.h"
+#include "buffer/ColorBuffer.h"
+#include "buffer/DepthTestBuffer.h"
+#include "buffer/StencilTestBuffer.h"
 
-#include "Scene.h"
+#include "scene/Scene.h"
 
 #define COLOR_BUFFER_BIT 1
 #define DEPTH_BUFFER_BIT 2
@@ -28,7 +28,7 @@ public:
 
 
 
-	void SetClearMask(int& flag);
+	void SetClearMask(int flag);
 
 	void SetClearColor(const Colour& c);
 	void SetClearDepth(const float& d);
@@ -40,16 +40,6 @@ private:
 	void PreRender();
 
 	void AfterRender();
-
-	//	GPU Pipeline
-	
-	void VertexPipeline(float* vertData, int nSize) {}
-
-	void TesslationPipeline(float* vertData, int nSize) {}
-
-	void GeometryPipeline(float* vertData, int nSize) {}
-
-	void FragmentPipeline(float* vertData, int nSize) {}
 
 
 

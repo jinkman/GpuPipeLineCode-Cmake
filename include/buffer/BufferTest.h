@@ -23,6 +23,7 @@ public:
 		: mPBufferData(nullptr)
 		, mSizeX(0)
 		, mSizeY(0)
+		, mbState(false)
 	{
 
 	}
@@ -48,23 +49,39 @@ public:
 		mSizeY = y;
 	}
 
+	bool& State()
+	{
+		return mbState;
+	}
 
 	void ClearBuffer(const TData& t)
 	{
-		memset(mPBufferData, 0, sizeof(t) * mSizeX * mSizeY);
+		for (auto wid = 0; wid < mSizeX; wid++)
+		{
+			for (auto hei = 0; hei < mSizeY; hei++)
+			{
+				UpdateBufferValue(wid, hei, t);
+			}
+		}
 	}
 
-	void SetTestFunc(const TestFunc& f)
-	{
-		mBufferTestFunc = f;
-	}
 
 	virtual bool Test(int x, int y, const TData& t) = 0;
+
+	void UpdateBufferValue(int x, int y, const TData& t)
+	{
+		mPBufferData[x * mSizeY + y] = t;
+	}
+
+	TData GetBufferValue(int x, int y)
+	{
+		return mPBufferData[x * mSizeY + y];
+	}
 
 protected:
 
 	TData* mPBufferData;
-	TestFunc mBufferTestFunc;
 	int mSizeX;
 	int mSizeY;
+	bool mbState;
 };

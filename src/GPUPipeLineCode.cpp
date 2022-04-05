@@ -8,16 +8,6 @@
 #include "GlobalConfig.h"
 
 
-float GetCurveValue(float t)
-{
-	float exp = 3.0;
-	if (t <= 0.5)
-		return 0.5 * pow(t * 2.0, exp);
-	else
-		return 1.0 - GetCurveValue(1.0 - t);
-}
-
-
 void InputProcess()
 {
 	ExMessage m;
@@ -67,21 +57,20 @@ int main()
 	//	construction scene
 	Scene scene;
 		
-	float value = GetCurveValue(0.9);
 	//	render loop
 	while (!GlobalConfig::GetInstance().IsWindowShouldClose())
 	{
 		// input
 		InputProcess();
 
-		BeginBatchDraw();
+		mGpuPipeline.SetClearMask(COLOR_BUFFER_BIT | DEPTH_BUFFER_BIT | STENCIL_BUFFER_BIT);
+		mGpuPipeline.SetClearColor(Colour(0.2f, 0.3f, 0.3f, 1.0f));
 
 		{
 			//	render scene
 			mGpuPipeline.DrawScene(scene);
 		}
 
-		EndBatchDraw();
 	}
 
 	// 关闭图形模式

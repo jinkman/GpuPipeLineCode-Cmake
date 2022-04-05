@@ -1,4 +1,4 @@
-#include "GPUBufferDataPipeline.h"
+#include "rendering/GPUBufferDataPipeline.h"
 
 #include <graphics.h>
 #include <string>
@@ -36,12 +36,19 @@ void GPUBufferDataPipeline::DrawScene(const Scene& scene)
 	{
 		// call draw call for all primitive sets
 		auto mPrimitiveArray = mGeo->GetPrimitiveArray();
-		auto mSs = mGeo->GetStateSet();
+		auto mSs = mGeo->GetOrCreateStateSet();
 		for (auto& mPri : mPrimitiveArray)
 		{
 			// draw call
 
 			// render pipeline use mSs
+
+			//	GPU Pipeline
+
+			// step1: Organization primitive
+
+			auto vertFunc = mSs->GetOrCreateProgram()->GetVertShader();
+			vertFunc(nullptr);
 			
 		}
 	}
@@ -66,7 +73,7 @@ void GPUBufferDataPipeline::SetClearStencil(const unsigned char& sten)
 	mClearStencil = sten;
 }
 
-void GPUBufferDataPipeline::SetClearMask(int& flag)
+void GPUBufferDataPipeline::SetClearMask(int flag)
 {
 	mClearMask = flag;
 }
@@ -75,15 +82,23 @@ void GPUBufferDataPipeline::SwapBuffer()
 {
 	// TODO: draw piexl to eazyx
 
-	static int frame = 0;
-	frame++;
+	BeginBatchDraw();
 
-	/*LPTSTR szBuffer = new TCHAR[1024];
-	wsprintf(szBuffer, L"Hello World!	Frame is: %d", frame);
+	for (auto wid = 0; wid<SCR_WIDTH; wid++)
+	{
+		for (auto hei = 0; hei<SCR_HEIGHT; hei++)
+		{
+			auto color = mGpuColorBuffer.GetBufferValue(wid, hei);
+			auto color2COLORREF = [](Colour col)->COLORREF
+			{
+				return int(col.blue * 255) << 16 | int(col.green * 255) << 8 | int(col.red * 255);
+			};
+			auto a = color2COLORREF(color);
 
-	auto halfWidth = textwidth(szBuffer) / 2;
-	auto halfHeight = textheight(szBuffer) / 2;
-	outtextxy(SCR_WIDTH / 2 - halfWidth, SCR_HEIGHT / 2 + halfHeight, szBuffer);*/
+			putpixel(wid, hei, color2COLORREF(color));
+		}
+	}
+	EndBatchDraw();
 }
 
 void GPUBufferDataPipeline::PreRender()

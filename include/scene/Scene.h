@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Geometry.h"
+#include "scene/Geometry.h"
 
 class Scene
 {

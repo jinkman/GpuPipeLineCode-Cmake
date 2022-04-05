@@ -20,6 +20,9 @@ auto GlobalConfig::GetGpuBufferPipeline() ->GPUBufferDataPipeline&
 
 GlobalConfig::GlobalConfig()
 	:mbWindowShouldClose(false)
+	, mbBlend(false)
+	, mbStencil(false)
+	, mbDepth(true)
 {
 
 }

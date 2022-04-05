@@ -1,16 +1,18 @@
 #pragma once
 
 #include <vector>
-
-#include "StateSet.h"
-#include "Primitive.h"
+#include <memory>
+#include "rendering/StateSet.h"
+#include "scene/Primitive.h"
 
 
 class Geometry
 {
 public:
 
-	auto GetStateSet()->StateSet*;
+	auto GetOrCreateStateSet()->StateSet*;
+
+	auto SetStateSet(StateSet* ss)->void;
 
 	auto GetPrimitiveArray()->std::vector<Primitive*>;
 
@@ -20,6 +22,6 @@ private:
 	std::vector<Primitive*> mVecPrimitive;
 
 	//	only render states
-	StateSet* mPSs;
+	std::shared_ptr<StateSet> mPSs;
 };
 

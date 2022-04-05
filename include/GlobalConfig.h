@@ -1,5 +1,5 @@
 #pragma once
-#include "GPUBufferDataPipeline.h"
+#include "rendering/GPUBufferDataPipeline.h"
 
 
 #define SCR_WIDTH 800
@@ -16,6 +16,12 @@ public:
 
 	auto GetGpuBufferPipeline() ->GPUBufferDataPipeline&;
 
+	auto IsDepthEnable()->bool&;
+
+	auto IsStencilEnable()->bool&;
+
+	auto IsBlendEnable()->bool&;
+
 	~GlobalConfig();
 protected:
 
@@ -27,6 +33,12 @@ private:
 
 private:
 	bool mbWindowShouldClose;
+
+	//state
+	bool mbBlend;
+	bool mbStencil;
+	bool mbDepth;
+
 	GPUBufferDataPipeline mGpuPipeline;
 };
 
